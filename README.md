@@ -17,3 +17,4 @@
 ## Etc
 
 - [Backend Roadmap](https://github.com/Hyune-c/study-develop/tree/master/backend-roadmap)
+- [[Deprecated] TIL](https://github.com/Hyune-c/TIL)
