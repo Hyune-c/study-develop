@@ -1,5 +1,7 @@
 # 개발 공부를 정리하자!
 
+강의, 책 등을 공부하고 개인적으로 정리한 자료들 입니다.
+
 ## Inflearn
 
 ### 김영한의 스프링 부트와 JPA 실무 완전 정복 로드맵
@@ -11,3 +13,7 @@
 ## Book
 
 - [오브젝트: 코드로 이해하는 객체지향 설계](https://github.com/Hyune-c/develop-study/tree/master/object)
+
+## Etc
+
+- [Backend Roadmap](https://github.com/Hyune-c/develop-study/tree/master/backend-roadmap)
