@@ -15,8 +15,10 @@ import com.example.dmaker.dto.DeveloperDetailDto;
 import com.example.dmaker.dto.DeveloperDto;
 import com.example.dmaker.dto.EditDeveloper;
 import com.example.dmaker.entity.Developer;
+import com.example.dmaker.entity.RetiredDeveloper;
 import com.example.dmaker.exception.DMakerException;
 import com.example.dmaker.repository.DeveloperRepository;
+import com.example.dmaker.repository.RetiredDeveloperRepository;
 import com.example.dmaker.type.DeveloperLevel;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DMakerService {
 
 	private final DeveloperRepository developerRepository;
+	private final RetiredDeveloperRepository retiredDeveloperRepository;
 
 	@Transactional
 	public CreateDeveloper.Response createDeveloper(final CreateDeveloper.Request request) {
@@ -89,7 +92,7 @@ public class DMakerService {
 	@Transactional
 	public DeveloperDetailDto editDeveloper(final String memberId, final EditDeveloper.Request request) {
 		validateDeveloperLevel(request.getDeveloperLevel(), request.getExperienceYears());
-		
+
 		final Developer developer = developerRepository.findByMemberId(memberId)
 				.orElseThrow(() -> new DMakerException(NO_DEVELOPER));
 		developer.setLevel(request.getDeveloperLevel());
@@ -97,6 +100,21 @@ public class DMakerService {
 		developer.setExperienceYears(request.getExperienceYears());
 		developer.setName(request.getName());
 		developer.setAge(request.getAge());
+
+		return DeveloperDetailDto.fromEntity(developer);
+	}
+
+	@Transactional
+	public DeveloperDetailDto deleteDeveloper(final String memberId) {
+		final Developer developer = developerRepository.findByMemberId(memberId)
+				.orElseThrow(() -> new DMakerException(NO_DEVELOPER));
+		developer.setStatus(StatusCode.RETIRED);
+
+		final RetiredDeveloper retiredDeveloper = RetiredDeveloper.builder()
+				.memberId(developer.getMemberId())
+				.name(developer.getName())
+				.build();
+		retiredDeveloperRepository.save(retiredDeveloper);
 
 		return DeveloperDetailDto.fromEntity(developer);
 	}
