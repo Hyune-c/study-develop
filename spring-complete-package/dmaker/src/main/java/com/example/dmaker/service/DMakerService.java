@@ -13,6 +13,7 @@ import com.example.dmaker.code.StatusCode;
 import com.example.dmaker.dto.CreateDeveloper;
 import com.example.dmaker.dto.DeveloperDetailDto;
 import com.example.dmaker.dto.DeveloperDto;
+import com.example.dmaker.dto.EditDeveloper;
 import com.example.dmaker.entity.Developer;
 import com.example.dmaker.exception.DMakerException;
 import com.example.dmaker.repository.DeveloperRepository;
@@ -47,14 +48,15 @@ public class DMakerService {
 	}
 
 	private void validateCreateDeveloperRequest(final CreateDeveloper.Request request) {
+		validateDeveloperLevel(request.getDeveloperLevel(), request.getExperienceYears());
+
 		developerRepository.findByMemberId(request.getMemberId())
 				.ifPresent(developer -> {
 					throw new DMakerException(DUPLICATED_MEMBER_ID);
 				});
+	}
 
-		final DeveloperLevel developerLevel = request.getDeveloperLevel();
-		final Integer experienceYears = request.getExperienceYears();
-
+	private void validateDeveloperLevel(final DeveloperLevel developerLevel, final Integer experienceYears) {
 		if (developerLevel == SENIOR
 				&& experienceYears < MIN_SENIOR_EXPERIENCE_YEARS) {
 			throw new DMakerException(LEVEL_AND_EXPERIENCE_YEARS_NOT_MATCH);
@@ -82,5 +84,20 @@ public class DMakerService {
 		return developerRepository.findByMemberId(memberId)
 				.map(DeveloperDetailDto::fromEntity)
 				.orElseThrow(() -> new DMakerException(NO_DEVELOPER));
+	}
+
+	@Transactional
+	public DeveloperDetailDto editDeveloper(final String memberId, final EditDeveloper.Request request) {
+		validateDeveloperLevel(request.getDeveloperLevel(), request.getExperienceYears());
+		
+		final Developer developer = developerRepository.findByMemberId(memberId)
+				.orElseThrow(() -> new DMakerException(NO_DEVELOPER));
+		developer.setLevel(request.getDeveloperLevel());
+		developer.setSkillType(request.getDeveloperSkillType());
+		developer.setExperienceYears(request.getExperienceYears());
+		developer.setName(request.getName());
+		developer.setAge(request.getAge());
+
+		return DeveloperDetailDto.fromEntity(developer);
 	}
 }
