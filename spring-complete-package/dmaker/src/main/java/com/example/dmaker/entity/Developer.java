@@ -1,5 +1,6 @@
 package com.example.dmaker.entity;
 
+import com.example.dmaker.code.StatusCode;
 import com.example.dmaker.type.DeveloperLevel;
 import com.example.dmaker.type.DeveloperSkillType;
 import java.time.LocalDateTime;
@@ -37,6 +38,9 @@ public class Developer {
 
 	@Enumerated(EnumType.STRING)
 	private DeveloperSkillType skillType;
+
+	@Enumerated(EnumType.STRING)
+	private StatusCode status;
 
 	private Integer experienceYears;
 	private String memberId;

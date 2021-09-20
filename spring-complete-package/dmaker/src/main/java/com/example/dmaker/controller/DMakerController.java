@@ -1,14 +1,16 @@
 package com.example.dmaker.controller;
 
 import com.example.dmaker.dto.CreateDeveloper;
+import com.example.dmaker.dto.DeveloperDetailDto;
+import com.example.dmaker.dto.DeveloperDto;
 import com.example.dmaker.service.DMakerService;
-import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,8 +30,13 @@ public class DMakerController {
 	}
 
 	@GetMapping("/developers")
-	public List<String> getAllDevelopers() {
-		log.info("### GET /developers");
-		return Arrays.asList("snow", "Elsa", "Olaf");
+	public ResponseEntity<List<DeveloperDto>> getDevelopers() {
+		return ResponseEntity.ok(dMakerService.getAllEmployedDevelopers());
+	}
+
+	@GetMapping("/developer/{memberId}")
+	public ResponseEntity<DeveloperDetailDto> getDeveloper(
+			@PathVariable final String memberId) {
+		return ResponseEntity.ok(dMakerService.getDeveloper(memberId));
 	}
 }
