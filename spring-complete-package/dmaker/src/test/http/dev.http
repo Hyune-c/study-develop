@@ -1,0 +1,36 @@
+### create developer
+POST http://localhost:8080/create-developer
+Content-Type: application/json
+
+{
+  "developerLevel": "JUNIOR",
+  "developerSkillType": "FULL_STACK",
+  "experienceYears": 2,
+  "memberId": "sunny.flower",
+  "name": "sun",
+  "age": 36
+}
+
+### delete developer
+DELETE http://localhost:8080/developer/sunny.flower
+Accept: application/json
+
+### get developers
+GET http://localhost:8080/developers
+Accept: application/json
+
+### get developer
+GET http://localhost:8080/developer/sunny.flower
+Accept: application/json
+
+### put developer
+PUT http://localhost:8080/developer/sunny.flower
+Content-Type: application/json
+
+{
+  "developerLevel": "SENIOR",
+  "developerSkillType": "FULL_STACK",
+  "experienceYears": 4,
+  "name": "sun",
+  "age": 36
+}
