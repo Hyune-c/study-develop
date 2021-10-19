@@ -1,0 +1,12 @@
+package com.example.getinline;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class GetInLineApplication {
+
+	public static void main(final String[] args) {
+		SpringApplication.run(GetInLineApplication.class, args);
+	}
+}
