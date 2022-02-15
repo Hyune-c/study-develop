@@ -17,6 +17,7 @@
 ## Book
 
 - [오브젝트: 코드로 이해하는 객체지향 설계](https://github.com/Hyune-c/study-develop/tree/master/object)
+- [이펙티브 자바 3/E](https://github.com/Hyune-c/study-develop/tree/master/effective-java)
 
 ## Etc
 
